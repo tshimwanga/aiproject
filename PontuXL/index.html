@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Le bot de PontuXL</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <section>
+    <div class="main-layout">
+      <!-- 🎯 Partie gauche : Titre + Plateau -->
+      <div class="left-panel">
+        <h1 class="title">PontuXL</h1>
+        <div class="game-board" id="game-board"></div>
+      </div>
+
+      <!-- 🎮 Partie droite : Commandes + Bot -->
+      <div class="right-panel">
+        <!-- Commande du joueur -->
+        <div class="command-box">
+          <button id="start-button" onclick="startGame()">Commencer</button>
+          <textarea id="player-command" placeholder="Entrer une commande..."></textarea>
+          <button onclick="traiterCommande()">Soumettre</button>
+
+        </div>
+
+        <!-- Zone bot -->
+        <div class="bot-zone">
+          <p id="annonce" onclick="annonceOut()">Bot Groupe IA – Cliquez ici pour activer</p>
+          <div class="texts"></div>
+          <form id="text-question-form">
+            <input type="text" id="text-question" placeholder="Posez une question au bot" />
+            <button type="submit">Envoyer</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Fenêtre modale avec instructions -->
+<div id="instructions-modal" class="modal">
+  <div class="modal-content">
+    <h2>Instructions de PontuXL</h2>
+    <div class="modal-body">
+      <p>
+        PontuXL est une adaptation du jeu Pontu, jouée sur un plateau de 6x6. <br><br>
+      
+        🎯 <strong>Objectif :</strong> Isoler les lutins des autres équipes en déplaçant les siens et en retirant des ponts.<br><br>
+      
+        👥 <strong>4 équipes :</strong> Bleu et Rouge (IA), Vert et Jaune (joueurs humains).<br>
+        Chaque joueur dispose de 4 lutins.<br><br>
+      
+        🔁 <strong>Ordre des tours :</strong> Vert → Bleu → Jaune → Rouge<br><br>
+      
+        ▶️ <strong>À chaque tour, un joueur peut :</strong>
+        <ul>
+          <li><strong>Placer</strong> un lutin : <code>placer NUM a X-Y</code></li>
+          <li><strong>Déplacer</strong> un lutin : <code>deplacer NUM a X-Y</code></li>
+          <li><strong>Déplacer + retirer un pont</strong> : <code>deplacer NUM a X-Y et retirer X1-Y1-X2-Y2</code></li>
+          <li><strong>Déplacer + roter un pont</strong> : <code>deplacer NUM a X-Y et roter X1-Y1-X2-Y2 a gauche|droite autour de A-B</code></li>
+          <li><strong>Retirer un pont (si bloqué)</strong> : <code>retirer X1-Y1-X2-Y2</code></li>
+          <li><strong>Roter un pont (si bloqué)</strong> : <code>roter X1-Y1-X2-Y2 a gauche|droite autour de A-B</code></li>
+        </ul>
+      
+        🔒 Un joueur ne peut retirer ou roter un pont que si <strong>ses lutins sont tous bloqués</strong>.<br>
+        🚫 Deux lutins ne peuvent pas occuper la même case.<br>
+        💀 Une équipe est éliminée si tous ses lutins sont totalement isolés (aucun déplacement possible).<br>
+        🏆 Le dernier joueur actif remporte la partie.<br><br>
+      
+        Ce jeu s’intègre à un projet d’intelligence artificielle avec une interface web interactive et un bot en Prolog.
+      </p>
+      
+    </div>
+    <button class="close-btn" onclick="closeModal()">OK</button>
+  </div>
+</div>
+
+
+<!-- Fenêtre modale d erreur -->
+
+
+<div id="erreur-modal" class="modal">
+  <div class="modal-content">
+    <p>Commande incorrecte, veuillez réessayer.</p>
+    <button class="close-btn" onclick="fermerErreur()">OK</button>
+  </div>
+</div>
+
+
+  <script src="./tau-prolog.js"></script>
+  <script src="./pontuxl.js"></script>
+  <script src="./prolog_session.js"></script>
+  <script src="./main.js"></script>
+</body>
+</html>
